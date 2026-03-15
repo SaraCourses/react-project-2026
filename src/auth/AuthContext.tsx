@@ -1,19 +1,9 @@
-import { createContext, useState, type ReactNode, useEffect } from 'react';
+import { useState, type ReactNode, useEffect } from 'react';
 import type { UserType } from '../types/user.types';
 import { getSession, setSession } from './auth.utils';
 import { loginByToken } from '../services/auth.service';
 
-type AuthStateType = {
-  user: UserType | null;
-  isInitialized: boolean;
-};
-
-type AuthContextType = AuthStateType & {
-  setUser: (user: UserType) => void;
-  isAuthenticated: boolean;
-};
-
-export const AuthContext = createContext<AuthContextType | null>(null);
+import { AuthContext, type AuthStateType } from './AuthContextValue';
 
 type Props = {
   children: ReactNode;
