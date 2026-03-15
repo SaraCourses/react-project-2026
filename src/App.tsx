@@ -1,14 +1,17 @@
+import { Provider } from 'react-redux';
 
-import { AuthProvider } from './auth/AuthContext'
-import Routes from './routes/router'
+import { AuthProvider } from './auth/AuthContext';
+import Routes from './routes/router';
+import { store } from './redux/store';
 
 function App() {
-
   return (
-    <AuthProvider>
-      <Routes />
-    </AuthProvider>
-  )
+    <Provider store={store}>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
+    </Provider>
+  );
 }
 
-export default App
+export default App;
