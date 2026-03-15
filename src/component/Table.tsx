@@ -1,5 +1,5 @@
 
-type Column<T> = {
+export type Column<T> = {
     key: keyof T;
     label: string;
     getLabel?: (data: T[keyof T]) => string;
