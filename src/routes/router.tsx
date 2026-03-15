@@ -8,6 +8,7 @@ import ProductsPage from '../pages/ProductsPage';
 import UsersPage from '../pages/UsersPage';
 import AuthGuard from '../auth/AuthGuard';
 import LoginGuard from '../auth/LoginGuard';
+import { Role } from '../types/user.types';
 
 const Routes = () => {
   const router = createBrowserRouter([
@@ -25,18 +26,29 @@ const Routes = () => {
         },
         {
           path: Paths.users,
-          element: <AuthGuard><UsersPage /></AuthGuard>,
+          element: (
+            <AuthGuard roles={[Role.Admin]}>
+              <UsersPage />
+            </AuthGuard>
+          ),
         },
       ],
     },
-
     {
       path: Paths.login,
-      element: <LoginGuard ><LoginPage /></LoginGuard>,
+      element: (
+        <LoginGuard>
+          <LoginPage />
+        </LoginGuard>
+      ),
     },
     {
       path: Paths.register,
-      element: <LoginGuard><RegisterPage /></LoginGuard>,
+      element: (
+        <LoginGuard>
+          <RegisterPage />
+        </LoginGuard>
+      ),
     },
     {
       path: '*',

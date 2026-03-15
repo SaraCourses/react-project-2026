@@ -8,6 +8,7 @@ import {
 } from '../services/auth.service';
 import { Paths } from '../routes/paths';
 import { useAuthContext } from '../auth/useAuthContext';
+import { Role } from '../types/user.types';
 
 const RegisterPage = () => {
   useDocumentTitle('Register');
@@ -18,11 +19,10 @@ const RegisterPage = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries()) as RegisterType;
-    const user = await registerService(data);
+    const user = await registerService({ ...data, role: Role.User });
     setSession(user.token);
     setUser(user)
     navigate(`/${Paths.home}`)
-
   };
 
   return (

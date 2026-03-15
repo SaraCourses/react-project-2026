@@ -1,24 +1,30 @@
-import { Navigate } from "react-router"
-import { useAuthContext } from "./useAuthContext"
-import { Paths } from "../routes/paths"
-import type { ReactNode } from "react"
+import { Navigate } from 'react-router';
+import { useAuthContext } from './useAuthContext';
+import { Paths } from '../routes/paths';
+import type { ReactNode } from 'react';
+import type { Role } from '../types/user.types';
 
 type Props = {
-    children: ReactNode
-}
+  children: ReactNode;
+  roles?: Role[];
+};
 
-const AuthGuard = ({ children }: Props) => {
-    const { isAuthonticated, isInitialized } = useAuthContext()
+const AuthGuard = ({ children, roles }: Props) => {
+  const { isAuthenticated, isInitialized, user } = useAuthContext();
 
-    if (!isInitialized) {
-        return <h1>Loading...</h1>
-    }
+  if (!isInitialized) {
+    return <h1>Loading...</h1>;
+  }
 
-    if (!isAuthonticated) {
-        return <Navigate to={`/${Paths.login}`} />
-    }
+  if (!isAuthenticated) {
+    return <Navigate to={`/${Paths.login}`} />;
+  }
 
-    return <>{children}</>
-}
+  if (roles?.length && !roles.includes(user!.role)) {
+    return <h1>Unauthorized</h1>;
+  }
 
-export default AuthGuard
+  return <>{children}</>;
+};
+
+export default AuthGuard;
